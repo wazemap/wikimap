@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 <html>
 <head>
 
@@ -28,18 +28,19 @@
         function initialize() {
 
             if (!myPos) myPos = new google.maps.LatLng(0 , 0);
+            if (!myZoom) myZoom = 15;
 
             var mapOptions = {
                 center: myPos,
-                zoom: 15,
-                maxZoom: 18
+                zoom: myZoom,
+                maxZoom: 20
             };
 
             var map;
 
             map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-            var mc = new MarkerClusterer(map, null, {gridSize: 20, imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+            var mc = new MarkerClusterer(map, null,  {gridSize: 20,  zoomOnClick: false, imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
 
             locationMarker = new google.maps.Marker({
                 position: myPos,
@@ -99,18 +100,18 @@
             var articleMarkers = new Object();
 
 
-            google.maps.event.addListener(mc,'click', function(c){
-                if(map.getZoom()==map.maxZoom){
-                    markers = c.getMarkers();
-                    articleArray = new Array();
-                    $.each(markers, function(key, value){
-                        articleArray.push(articleMarkers[value.id]);
-                    });
-                    infowindow.close();
-                    infowindow.setContent(getInfoBoxHTML(articleArray));
-                    infowindow.setPosition(c.getCenter());
-                    infowindow.open(map,null);
-                }
+            google.maps.event.addListener(mc, 'click', function (c) {
+                
+                markers = c.getMarkers();
+                articleArray = new Array();
+                $.each(markers, function (key, value) {
+                    articleArray.push(articleMarkers[value.id]);
+                });
+                infowindow.close();
+                infowindow.setContent(getInfoBoxHTML(articleArray));
+                infowindow.setPosition(c.getCenter());
+                infowindow.open(map, null);
+
             });
 
             function getInfoBoxHTML(articles){
@@ -263,12 +264,15 @@
         var lang = getURLParameter('locale');
         var lat =  getURLParameter('lat');
         var lng = getURLParameter('lng');
+        var zoom = getURLParameter('zoom');
 
         if (!lang) lang = 'en';
         if (!lat) lat = "40.6892746";
         if (!lng) lng = "-74.04455589";
+        if (!zoom) zoom = "15";
 
         myPos  = new google.maps.LatLng(lat,lng);
+        myZoom = parseInt(zoom);
         urlDomain = 'https://' + lang + '.wikipedia.org';
         urlDomainMobile  = 'https://' + lang + '.m.wikipedia.org';
 
