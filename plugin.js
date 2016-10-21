@@ -1,38 +1,43 @@
 {
-"moduleId" : "wazemap/wikimap",
-"title" : "wikimap",
-"subtitle" : "www.wiki-map.com",
-"backButton" : false,
-"enableGPS" : true,
-"zoomControl" : false,
-"screenLockRot" : false,
-"reload" : true,
-"shouldOverrideUrlLoading1" : "http://www.wiki-map.com",
-"shouldOverrideUrlLoading2" : "https://www.wiki-map.com",
-"loadDataWithBaseUrl1" : "http://www.wiki-map.com/map/",
-"loadDataWithBaseUrl3" : "text/html",
-"loadDataWithBaseUrl4" : "utf-8",
-"loadDataWithBaseUrl5" : null,
-"browserLaunchLink" : "http://www.wiki-map.com/map/?locale=en&lat=#lat#&lng=#lng#",
-"loadDataWithBaseUrl2" : "
+"moduleId": "wazemap/wikimap",
+"title": "wikimap",
+"subtitle": "(github/wazeman)",
+"backButton": false,
+"enableGPS": false,
+"zoomControl": false,
+"screenLockRot": false,
+"reload": true,
+"shouldOverrideUrlLoading1": "https://cdn.rawgit.com",
+"shouldOverrideUrlLoading2": "http://cdn.rawgit.com",
+"loadDataWithBaseUrl1": "https://cdn.rawgit.com/wazemap/wikimap/master/",
+"loadDataWithBaseUrl3": "text/html",
+"loadDataWithBaseUrl4": "utf-8",
+"loadDataWithBaseUrl5": null,
+"browserLaunchLink": "https://cdn.rawgit.com/wazemap/wikimap/master/wikishow_s.html?locale=en&lat=#lat#&lng=#lng#",
+"loadDataWithBaseUrl2": "
 <!DOCTYPE html>
-<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js'></script>
+<head>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>
 <link rel='stylesheet' href='https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css'>
 <script src='https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js'></script>
+
 <script type='text/javascript'>
-window.loadPage = function (url) {
-$.get(url, function(page) {
-newPage = page.replace('zoom: 15', 'zoom: #zoom#');
-var newDoc = document.open();
-newDoc.write(newPage);
-newDoc.close();
-});
+
+function loadPage (url) {
+location = url;
 };
+
 lang = localStorage.getItem('lang');
 if ( lang !== null ) {
-loadPage('http://www.wiki-map.com/map/?locale=' + lang + '&lat= + #lat#&lng=#lng#');
+loadPage('https://cdn.rawgit.com/wazemap/wikimap/master/wikishow_s.html?locale=' + lang + '&lat=#lat#&lng=#lng#');
 }
 </script>
+
+</head>
+
+<boby>
+
 <div data-role='page'>
 <div data-role='fieldcontain' >
 <fieldset data-role='controlgroup' id='radio-choice'>
@@ -120,15 +125,16 @@ loadPage('http://www.wiki-map.com/map/?locale=' + lang + '&lat= + #lat#&lng=#lng
 </fieldset>
 </div>
 <script>
-$(':jqmData(role=\\'page\\'):last').on('pageshow', function(event) {
-$('#myPopup', $(this)).popup('open');
-});
+
 $( '#radio-choice' ).change(function() {
 lang = $('#radio-choice :radio:checked').val();
 localStorage.setItem('lang',lang);
-loadPage('http://www.wiki-map.com/map/?locale=' + lang + '&lat= + #lat#&lng=#lng#');
+loadPage('https://cdn.rawgit.com/wazemap/wikimap/master/wikishow_s.html?locale=' + lang + '&lat=#lat#&lng=#lng#');
 });
 </script>
 </div>
+
+</boby>
+
 "
 }
