@@ -220,7 +220,7 @@
 
                 center = bounds.getCenter();
 
-                history.pushState({}, "wiki-show", "?locale=" + lang + "&lat=" +center.lat().toFixed(4)+'&lng='+center.lng().toFixed(6));
+                history.replaceState({}, "wiki-show", "?locale=" + lang + "&lat=" +center.lat().toFixed(4)+'&lng='+center.lng().toFixed(6));
 
                 requestData(bounds, 0);
             });
