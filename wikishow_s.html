@@ -220,6 +220,8 @@
 
                 center = bounds.getCenter();
 
+                history.pushState({}, "wiki-show", "?locale=" + lang + "&lat=" +center.lat().toFixed(4)+'&lng='+center.lng().toFixed(6));
+
                 requestData(bounds, 0);
             });
 
@@ -261,7 +263,7 @@
 <script>
     $(document).ready(function () {
 
-        var lang = getURLParameter('locale');
+        lang = getURLParameter('locale');
         var lat =  getURLParameter('lat');
         var lng = getURLParameter('lng');
         var zoom = getURLParameter('zoom');
