@@ -49,7 +49,7 @@
 
             map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-            var mc = new MarkerClusterer(map, null,  {gridSize: 20,  zoomOnClick: false, imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+            var mc = new MarkerClusterer(map, null,  {gridSize: 40,  zoomOnClick: false, imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
             if(!!navigator.geolocation) {
 
                 navigator.geolocation.getCurrentPosition(function(position) {
