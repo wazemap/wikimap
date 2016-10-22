@@ -21,6 +21,15 @@
     </script>
 
     <script type="text/javascript">
+        var circle ={
+            path: google.maps.SymbolPath.CIRCLE,
+            fillColor: 'blue',
+            fillOpacity: .4,
+            scale: 5.5,
+            strokeColor: 'white',
+            strokeWeight: 1
+        };
+
         var ajaxQueue = new Array();
         var locationMarker = null;
 
@@ -41,12 +50,34 @@
             map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
             var mc = new MarkerClusterer(map, null,  {gridSize: 20,  zoomOnClick: false, imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+            if(!!navigator.geolocation) {
 
-            locationMarker = new google.maps.Marker({
-                position: myPos,
-                map: map,
-                title: 'Current Location'
-            });
+                navigator.geolocation.getCurrentPosition(function(position) {
+
+                    var geolocate = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+                    if(locationMarker==null){
+                        locationMarker = new google.maps.Marker({
+                            icon: circle,
+                            position: geolocate,
+                            map: map,
+                            title: 'Current Location'
+                        });
+                    }
+
+                    navigator.geolocation.watchPosition(function(position){
+                        var geolocate = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                        locationMarker.setPosition(geolocate);
+                    });
+
+
+                });
+
+            } else {
+                console.error( 'No Geoloaction');
+            }
+
+
 
           var infowindow = new google.maps.InfoWindow({
                 content: 'empty'
@@ -64,7 +95,7 @@
                 controlUI.style.borderStyle = 'solid';
                 controlUI.style.borderWidth = '2px';
                 controlUI.style.cursor = 'pointer';
-                controlUI.style.textAlign = 'center';
+                controlUI.style.textAlign = 'My Position';
                 controlUI.title = 'Click to set the map to your current location';
                 controlDiv.appendChild(controlUI);
 
@@ -74,7 +105,7 @@
                 controlText.style.fontSize = '18px';
                 controlText.style.paddingLeft = '4px';
                 controlText.style.paddingRight = '4px';
-                controlText.innerHTML = '<b>Center</b>';
+                controlText.innerHTML = '<b>My Position</b>';
                 controlUI.appendChild(controlText);
 
 
@@ -101,7 +132,7 @@
 
 
             google.maps.event.addListener(mc, 'click', function (c) {
-                
+
                 markers = c.getMarkers();
                 articleArray = new Array();
                 $.each(markers, function (key, value) {
